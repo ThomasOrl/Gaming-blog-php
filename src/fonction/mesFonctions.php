@@ -16,10 +16,10 @@
     function sendImg($photo, $destination){
         //décider ou doit aller ma fonction
         if($destination == "avatar"){
-            $dossier= "../../src/img/avatar";
+            $dossier= "../../src/img/avatar/" .time();
         }
         else{
-            $dossier= "../../src/img.articles";
+            $dossier= "../../src/img/articles/" .time();
         }
 
         //créer un tableau avec les extension autorisées
@@ -45,5 +45,5 @@
             header("location: ../../index.php");
         }
     }
-
+    
 ?>

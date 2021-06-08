@@ -6,8 +6,16 @@
 
     // si mon user est connecté je le renvoi sur la page d'accueil grace a ma fonction
     estConnecté();
+
     // definir la variable qui definira si le mdp est correct ou pas 
-    (isset($_SESSION["mdpNok"])&& $_SESSION["mdpNok"]== true)? $mdpNok = $_SESSION["mdpNok"] : $mdpNok = false;
+    if(isset($_SESSION["mdpNok"])&& $_SESSION["mdpNok"]== true){
+         $mdpNok = $_SESSION["mdpNok"];
+         $_SESSION["mdpNok"]= false;
+    }
+    else{
+        $mdpNok = false;
+    }
+    
 ?>
 <?php
     // Verifier si les input sont bien présent, et que ma méthod POST à été déclenché
@@ -18,7 +26,7 @@
         //je constuis un tableau avec les données recues
         $option = array(
             "nom"     =>FILTER_SANITIZE_STRING,
-            "prnom"   =>FILTER_SANITIZE_STRING,
+            "prenom"   =>FILTER_SANITIZE_STRING,
             "login"   =>FILTER_SANITIZE_STRING,
             "email"   =>FILTER_SANITIZE_EMAIL,
             "mdp"     =>FILTER_SANITIZE_STRING,
@@ -110,8 +118,12 @@
             }
             //si le booleen est true afficher information pour inviter a connecter
             if(isset($_SESSION["msgLogin"]) && $_SESSION["msgLogin"]==true){
-                echo "<h2> cet email possede deja un compte, veuillez vous connecter </h2>";
+                echo "<h2> ce login possede deja un compte, veuillez vous connecter </h2>";
                 $_SESSION["msgLogin"]= false;
+            }
+            if($mdpNok== true){
+                $mdpNok=false;
+                echo "<h2>Les mots de passes ne sont pas identiques </h2>";
             }
         ?>
         <table>
@@ -139,11 +151,11 @@
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td><Input type="password" name="mdp" required placeholder="Entrez votre mot de passe" <?php if($mdpNok== true){?> class="danger" placeholder="mot de passe pas identique"<?php } ?>></td>
+                    <td><Input type="password" name="mdp" required placeholder="Entrez votre mot de passe"></td>
                 </tr>
                 <tr>
                     <td>Mot de passe</td>
-                    <td><Input type="password" name="mdp2" required placeholder="Répétez votre mot de passe" <?php if($mdpNok== true){?> class="danger" placeholder="mot de passe pas identique"<?php } ?>></td>
+                    <td><Input type="password" name="mdp2" required placeholder="Répétez votre mot de passe"></td>
                 </tr>
                 <tr>
                     <td>Envoyer votre avatar</td>
