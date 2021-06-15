@@ -76,4 +76,77 @@ function getHardCategorie(){
     $requete->closeCursor();
     return $listHardCategorie;
 }
+
+    // AJOUTER UNE CONSOLE
+function addHardCategorie($console){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("INSERT INTO hardware(console) VALUES(?)");
+    $requete->execute(array($console));
+    $requete->closeCursor();
+}
+
+    // EFFACER UNE CONSOLE
+function deleteHardCategorie($hardId){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("DELETE FROM hardware WHERE hardId = ?");
+    $requete->execute(array($hardId)) or die(print_r($requete->errorInfo(),true));
+    $requete->closeCursor();
+}
+
+    // CATEGORIE TYPE ARTICLE   
+    // CHERCHER TOUS LES TYPE D'ARTICLE
+
+function getCategorie(){
+    $bdd = dbAccess();
+    $requete = $bdd->query("SELECT * FROM categorie");
+
+    while($données = $requete->fetch()){
+        $listCategorie[] = $données;
+    }
+    $requete->closeCursor();
+    return $listCategorie;
+}
+
+ //Ajouter un type d'article 
+ function addTypeArticle($typeArticle){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("INSERT INTO categorie(nomCategorie) VALUES(?)");
+    $requete->execute(array($typeArticle)) or die(print_r($requete->errorInfo(),true));
+    $requete->closeCursor();
+ }
+ // Effacer type d'article
+ function deleteTypeCategorie($intDeleteType){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("DELETE FROM categorie WHERE categorieId = ?");
+    $requete->execute(array($intDeleteType)) or die(print_r($requete->errorInfo(),true));
+    $requete->closeCursor();
+ }
+ // CATEGORIE GAME
+
+ // Chercher toutes les categorie
+ function getGameCategorie(){
+     $bdd = dbAccess();
+     $requete = $bdd-> query("SELECT * FROM gameCategory ") or die(print_r($requete->errorInfo(),true));
+
+     while($données = $requete->fetch()){
+         $listeGameCat[] = $données;
+
+     }
+     $requete->closeCursor();
+     return $listeGameCat;
+ }
+ // ajouter une catégorie de jeux
+ function addGameCategorie($gameCat){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("INSERT INTO gameCategory(genre) VALUES(?)");
+    $requete->execute(array($gameCat)) or die(print_r($requete->errorInfo(),true));
+    $requete->closeCursor();
+ }
+ //delete game categorie
+ function deleteGameCategorie($id){
+    $bdd = dbAccess();
+    $requete = $bdd->prepare("DELETE FROM gameCategory WHERE gameCategoryId = ?");
+    $requete->execute(array($id)) or die(print_r($requete->errorInfo(),true));
+    $requete->closeCursor();
+ }
 ?> 
