@@ -2,6 +2,7 @@
     $titre= "Connectez-vous";
     require "../../src/common/template.php";
     $mdpNok = false;
+    require "../../src/fonction/dbAccess.php";
     require "../../src/fonction/mesFonctions.php";
     require "../../src/fonction/dbFonction.php";
     //si mon user est connecté je le renvoi sur l'accueil grace à ma fonction

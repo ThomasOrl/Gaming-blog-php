@@ -1,16 +1,17 @@
 <?php
-    //Enregistrer un nouvel utilisateur dans notre base de données
-    function createuser($avatar, $login, $nom, $prenom, $email, $mdp, $roleId, $ban ){
-        $bdd= new PDO("mysql:host=localhost;dbname=blog_gaming;charset=utf8","root","");
+    // Enregistre un nouvel utilisteur dans notre base de données
+    function createUser($avatar, $login, $nom, $prenom, $email, $mdp, $roleId, $ban){
+        $bdd = dbAccess();
         $requete =$bdd->prepare("INSERT INTO users(avatar, login, nom, prenom, email, mdp, roleId, ban)
-                                VALUE (?,?,?,?,?,?,?,?)");
-        $requete->execute(array($avatar, $login, $nom, $prenom, $email, $mdp, $roleId, $ban)) or die(print_r($requete->errorInfo(),true));                       
+                                VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+        $requete->execute(array($avatar, $login, $nom, $prenom, $email, $mdp, $roleId, $ban)) or die(print_r($requete->errorInfo(), TRUE));
         $requete->closeCursor();
     }
-    // Fonction pour se connecter au site
+    
+// Fonction pour se connecter au site
 function login($user, $password){
     // connection à la db
-    $bdd = new PDO("mysql:host=localhost;dbname=blog_gaming;charset=utf8", "root", "");
+    $bdd = dbAccess();
     // requete pour récupérer l'user correspondant au login entré
     $requete = $bdd->query('SELECT * 
                             FROM users u 
@@ -53,4 +54,26 @@ function login($user, $password){
     exit();
 }
 
-?>
+function updateImg($fichier){
+    $bdd = dbAccess();
+    //preparer la requete pour updater données
+    $requete = $bdd->prepare("UPDATE user 
+                                SET avatar = ?
+                                WHERE userId = ?");
+    $requete->execute(array($fichier, $_SESSION["user"]["id"]));
+    $requete->closeCursor();
+    
+}
+//Fonction pour aller chercher la liste des catégories
+function getHardCategorie(){
+    $bdd = dbAccess();
+    $requete = $bdd-> query("SELECT * FROM hardware") or die(print_r($requete->errorInfo(),true));
+
+    //distribuer les données recues dans une variable tableau
+    while($données = $requete->fetch()){
+        $listHardCategorie[] = $données;
+    }
+    $requete->closeCursor();
+    return $listHardCategorie;
+}
+?> 

@@ -1,6 +1,7 @@
 <?php
     $titre= "Enregistrez-vous";
     require "../../src/common/template.php";
+    require "../../src/fonction/dbAccess.php";
     require "../../src/fonction/mesFonctions.php";
     require "../../src/fonction/dbFonction.php";
 
@@ -16,7 +17,7 @@
         $mdpNok = false;
     }
     
-?>
+?> 
 <?php
     // Verifier si les input sont bien présent, et que ma méthod POST à été déclenché
     if(isset($_POST["nom"])&& !empty($_POST["nom"]) && !empty($_POST["login"])&& !empty($_POST["prenom"])&& !empty($_POST["email"])&& !empty($_POST["mdp"])&& !empty($_POST["mdp2"])){
